@@ -7,48 +7,43 @@ Original file is located at
     https://colab.research.google.com/github/ikfinakmlya/capstone_datascience/blob/main/Capstone_Bengkod.ipynb
 
 ## Ikfina Kamaliya Rizqi - A11.2022.14170
+
+# 1. EDA
 """
 
-import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import warnings
 
-
-
 # Load the dataset
 file_path = "ObesityDataSet.csv"
 df = pd.read_csv(file_path)
 
-st.title("CAPSTONE PROJECT - DATA SCIENCE ")
-
-st.subheader("1. EDA")
-
 # 1. Tampilkan beberapa baris pertama dan informasi umum dataset
-st.write("5 baris pertama:")
-st.dataframe(df.head(5))
+print("5 baris pertama:")
+print(df.head(5))
 
 # Tampilkan jumlah baris dan kolom
-st.write("\nJumlah baris dan kolom:")
-st.write(f"{df.shape[0]} baris, {df.shape[1]} kolom")
+print("\nJumlah baris dan kolom:")
+print(f"{df.shape[0]} baris, {df.shape[1]} kolom")
 
 # Tipe data
 df = df.replace('?', np.nan)
 kolom_numerik = ['Age', 'Height', 'Weight', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE']
 for kol in kolom_numerik:
     df[kol] = pd.to_numeric(df[kol], errors='coerce')
-st.write("\nTIPE DATA:")
-st.dataframe(df.dtypes)
+print("\nTIPE DATA:")
+print(df.dtypes)
 
 # Tampilkan deskripsi statistik data numerik
-st.write("\nDeskripsi data numerik:")
-st.dataframe(df.describe())
+print("\nDeskripsi data numerik:")
+print(df.describe())
 
 # Untuk data kategorikal juga bisa tambahkan:
-st.write("\nDeskripsi data kategorikal:")
-st.dataframe(df.describe(include=['object']))
+print("\nDeskripsi data kategorikal:")
+print(df.describe(include=['object']))
 
 # Visualisasi kolom numerik
 # Pilih kolom numerik
@@ -63,8 +58,7 @@ for col in numerik_cols:
     plt.ylabel('Frekuensi')
     plt.grid(True)
     plt.tight_layout()
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
 # Visualisasi kolom kategorikal
 
@@ -80,21 +74,20 @@ for col in kategori_cols:
     plt.title(f'Distribusi Kategori: {col}')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
 # Cek Missing Values
-st.write("Cek Missing Values:")
-st.dataframe(df.isnull().sum())
-st.write("\nTotal missing values:", df.isnull().sum().sum())
+print("Cek Missing Values:")
+print(df.isnull().sum())
+print("\nTotal missing values:", df.isnull().sum().sum())
 
 # Cek Unique Values per Kolom
-st.write("\nCek Unique Values per Kolom:")
+print("\nCek Unique Values per Kolom:")
 for col in df.columns:
-    st.write(f"{col}: {df[col].nunique()}")
+    print(f"{col}: {df[col].nunique()}")
 
 # Cek Data Duplikat
-st.write(f"Cek Jumlah data duplikat: {df.duplicated().sum()}")
+print(f"Cek Jumlah data duplikat: {df.duplicated().sum()}")
 
 #Cek keseimbangan seluruh dataset
 
@@ -103,31 +96,29 @@ numerik_cols = df.select_dtypes(include=['int64', 'float64']).columns
 kategori_cols = df.select_dtypes(include=['object', 'category']).columns
 
 # Cek Keseimbangan Kolom Kategorikal
-st.write("Keseimbangan Data - Kolom Kategorikal")
+print("Keseimbangan Data - Kolom Kategorikal")
 for col in kategori_cols:
-    st.write(f"\nDistribusi {col}:")
-    st.dataframe(df[col].value_counts(normalize=True) * 100)
+    print(f"\nDistribusi {col}:")
+    print(df[col].value_counts(normalize=True) * 100)
 
     plt.figure(figsize=(6, 4))
     sns.countplot(x=col, data=df, palette='Set2')
     plt.title(f'Distribusi Kategori: {col}')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
 # Cek Keseimbangan Kolom Numerik
-st.write("\nKeseimbangan Data - Kolom Numerik")
+print("\nKeseimbangan Data - Kolom Numerik")
 for col in numerik_cols:
     plt.figure(figsize=(6, 4))
     sns.histplot(df[col], kde=True, color='orange')
     plt.title(f'Distribusi Nilai: {col}')
     plt.tight_layout()
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
 # Deteksi outlier kolom numerik menggunakan boxplot
-st.write("\nDeteksi Outlier Kolom Numerik dengan Boxplot")
+print("\nDeteksi Outlier Kolom Numerik dengan Boxplot")
 # Pilih kolom numerik
 numerik_cols = df.select_dtypes(include=['int64', 'float64']).columns
 
@@ -137,8 +128,7 @@ for col in numerik_cols:
     sns.boxplot(x=df[col], color='orange')
     plt.title(f'Deteksi Outlier dengan Boxplot - Kolom: {col}')
     plt.tight_layout()
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
 """Kesimpulan:
 
@@ -154,25 +144,25 @@ for col in df.columns:
         if df[col].dtype == 'object':
             mode_val = df[col].mode()[0]
             df[col] = df[col].fillna(mode_val)
-            st.write(f"Kolom '{col}' (tipe object) diisi dengan modus: {mode_val}")
+            print(f"Kolom '{col}' (tipe object) diisi dengan modus: {mode_val}")
         else:
             median_val = df[col].median()
             df[col] = df[col].fillna(median_val)
-            st.write(f"Kolom '{col}' (tipe numerik) diisi dengan median: {median_val}")
+            print(f"Kolom '{col}' (tipe numerik) diisi dengan median: {median_val}")
 
-st.write("\nMissing value setelah imputasi:")
-st.dataframe(df.isnull().sum())
-st.write("Total:", df.isnull().sum().sum())
+print("\nMissing value setelah imputasi:")
+print(df.isnull().sum())
+print("Total:", df.isnull().sum().sum())
 
 # Tangani Duplikat
-st.write(f"\nJumlah Duplikasi Sebelum: {df.duplicated().sum()}")
+print(f"\nJumlah Duplikasi Sebelum: {df.duplicated().sum()}")
 df = df.drop_duplicates()
-st.write(f"Jumlah Duplikasi Setelah: {df.duplicated().sum()}")
+print(f"Jumlah Duplikasi Setelah: {df.duplicated().sum()}")
 
 # Tangani Eror (Contoh validasi kolom numerik tidak bernilai negatif (misalnya kolom umur atau harga))
 for col in df.select_dtypes(include=np.number).columns:
     if (df[col] < 0).any():
-        st.write(f"Error nilai negatif ditemukan di kolom: {col}, akan diganti dengan median")
+        print(f"Error nilai negatif ditemukan di kolom: {col}, akan diganti dengan median")
         df.loc[df[col] < 0, col] = df[col].median()
 
 # Tangani Outlier
@@ -188,20 +178,20 @@ def remove_outliers_iqr(data, col):
 for col in df.select_dtypes(include=np.number).columns:
     original_len = len(df)
     df = remove_outliers_iqr(df, col)
-    st.write(f"Outlier dihapus dari kolom '{col}': {original_len - len(df)} baris")
+    print(f"Outlier dihapus dari kolom '{col}': {original_len - len(df)} baris")
 
 # Cek kolom kategorik
 categorical_cols = df.select_dtypes(include=['object', 'category']).columns
-st.write("Kolom kategorik:", list(categorical_cols))
+print("Kolom kategorik:", list(categorical_cols))
 
 # Pilih metode
 if len(categorical_cols) > 0:
     df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
-    st.write("Semua kolom kategorik diubah jadi numerik dengan one-hot encoding.")
+    print("Semua kolom kategorik diubah jadi numerik dengan one-hot encoding.")
 else:
-    st.write("Tidak ada kolom kategorik yang perlu dikonversi.")
+    print("Tidak ada kolom kategorik yang perlu dikonversi.")
 
-st.dataframe(df.info())  # semua kolom sekarang numerik (int/float)
+print(df.info())  # semua kolom sekarang numerik (int/float)
 
 # tentukan apakah semua feature perlu digunakan.
 
@@ -211,23 +201,22 @@ selector = VarianceThreshold(threshold=0.01)  # Fitur dengan variansi < 1% dibua
 selector.fit(df.drop('NObeyesdad_Overweight_Level_II', axis=1))
 
 low_variance_features = df.drop('NObeyesdad_Overweight_Level_II', axis=1).columns[~selector.get_support()]
-st.write("Fitur variansi rendah:", list(low_variance_features))
+print("Fitur variansi rendah:", list(low_variance_features))
 
 """fitur-fitur ini kemungkinan besar tidak banyak memberi informasi tambahan, karena nilainya hampir sama di semua baris."""
 
 df = df.drop(['Height', 'MTRANS_Bike', 'MTRANS_Motorbike'], axis=1)
-st.write("Fitur variansi rendah sudah dihapus.")
+print("Fitur variansi rendah sudah dihapus.")
 
 """Fitur variansi rendah sudah dihapus."""
 
 plt.figure(figsize=(12, 10))
 sns.heatmap(df.corr(numeric_only=True), annot=False, cmap='coolwarm')
 plt.title("Korelasi antar fitur")
-st.pyplot(plt)
-plt.close()
+plt.show()
 
-st.write(df['NObeyesdad_Overweight_Level_II'].value_counts())
-st.write(df['NObeyesdad_Overweight_Level_II'].value_counts(normalize=True))  # dalam persen
+print(df['NObeyesdad_Overweight_Level_II'].value_counts())
+print(df['NObeyesdad_Overweight_Level_II'].value_counts(normalize=True))  # dalam persen
 
 """tidak seimbang.
 Kelas True (Overweight Level II) cuma 12%, artinya model bisa bias ke kelas False.
@@ -247,16 +236,16 @@ minmax_cols = [
 ]
 
 # Standarisasi (Ubah data ke distribusi dengan mean=0 dan sandar deviasi=1)
-st.write("STANDARISASI:")
+print("STANDARISASI:")
 scaler_std = StandardScaler()
 df[standard_cols] = scaler_std.fit_transform(df[standard_cols])
-st.write(df[standard_cols].describe())
+print(df[standard_cols].describe())
 
 # Normalisasi (semua nilai berada di rentang 0,1 menggunakan minmax)
-st.write("NORMALISASI:")
+print("NORMALISASI:")
 scaler_mm = MinMaxScaler()
 df[minmax_cols] = scaler_mm.fit_transform(df[minmax_cols])
-st.write(df[minmax_cols].describe())
+print(df[minmax_cols].describe())
 
 """Kesimpulan:
 
@@ -267,7 +256,7 @@ Setelah dilakukan proses pembersihan data, tidak ditemukan missing value karena 
 print(df.columns.tolist())
 """
 
-st.write(df.columns.tolist())
+print(df.columns.tolist())
 
 # Gabungkan kolom one-hot target menjadi 1 kolom label
 target_cols = ['NObeyesdad_Normal_Weight',
@@ -327,8 +316,7 @@ def evaluate_model(y_test, y_pred, model_name):
     plt.title(f'Confusion Matrix - {model_name}')
     plt.ylabel('Actual')  # Baris
     plt.xlabel('Predicted')  # Kolom
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
     return {'Model': model_name, 'Accuracy': accuracy, 'Precision': precision, 'Recall': recall, 'F1-Score': f1}
 
@@ -347,7 +335,7 @@ results_df = pd.DataFrame({
 })
 
 # Menampilkan tabel s
-st.write("\nTabel Perbandingan Model:")
+print("\nTabel Perbandingan Model:")
 col_widths = {
     'Metric': 12,
     'Logistic Regression': 20,
@@ -359,7 +347,7 @@ formatted_table = results_df.to_string(index=False, formatters={
     'Decision Tree': '{:.4f}'.format,
     'Random Forest': '{:.4f}'.format
 }, col_space=col_widths)
-st.write(formatted_table)
+print(formatted_table)
 
 # Visualisasi perbandingan metrik
 results_df.set_index('Metric').plot(kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e', '#2ca02c'])
@@ -369,8 +357,7 @@ plt.xlabel('Metrik')
 plt.xticks(rotation=0)
 plt.legend(title='Model')
 plt.tight_layout()
-st.pyplot(plt)
-plt.close()
+plt.show()
 
 """Kesimpulan:
 
@@ -403,7 +390,7 @@ param_grid_logreg = {
 grid_logreg = GridSearchCV(LogisticRegression(max_iter=1000, random_state=42),
                            param_grid_logreg, cv=5, n_jobs=-1, scoring='accuracy')
 grid_logreg.fit(X_train, y_train)
-st.write("Best Logistic Regression:", grid_logreg.best_params_)
+print("Best Logistic Regression:", grid_logreg.best_params_)
 
 # 2. Grid Search untuk Decision Tree
 param_grid_tree = {
@@ -418,7 +405,7 @@ param_grid_tree = {
 grid_tree = GridSearchCV(DecisionTreeClassifier(random_state=42),
                          param_grid_tree, cv=5, n_jobs=-1, scoring='accuracy')
 grid_tree.fit(X_train, y_train)
-st.write("Best Decision Tree:", grid_tree.best_params_)
+print("Best Decision Tree:", grid_tree.best_params_)
 
 # 3. Grid Search untuk Random Forest
 param_grid_forest = {
@@ -438,7 +425,7 @@ param_grid_forest = {
 grid_forest = GridSearchCV(RandomForestClassifier(random_state=42),
                            param_grid_forest, cv=5, n_jobs=-1, scoring='accuracy')
 grid_forest.fit(X_train, y_train)
-st.write("Best Random Forest:", grid_forest.best_params_)
+print("Best Random Forest:", grid_forest.best_params_)
 
 """- Logistic :
   - C=10 ; regularisasi lemah → model boleh lebih fleksibel.
@@ -520,13 +507,13 @@ def evaluate_model(y_test, y_pred, model_name, y_pred_before=None):
         recall_before = recall_score(y_test, y_pred_before, average='weighted', zero_division=0)
         f1_before = f1_score(y_test, y_pred_before, average='weighted', zero_division=0)
 
-        st.write(f"\nPerbandingan untuk {model_name}:")
-        st.write(f"Sebelum Tuning - Accuracy: {accuracy_before:.4f}, Precision: {precision_before:.4f}, Recall: {recall_before:.4f}, F1-Score: {f1_before:.4f}")
-        st.write(f"Setelah Tuning - Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1-Score: {f1:.4f}")
-        st.write(f"Peningkatan Akurasi: {(accuracy - accuracy_before):.4f}")
-        st.write(f"Peningkatan Precision: {(precision - precision_before):.4f}")
-        st.write(f"Peningkatan Recall: {(recall - recall_before):.4f}")
-        st.write(f"Peningkatan F1-Score: {(f1 - f1_before):.4f}")
+        print(f"\nPerbandingan untuk {model_name}:")
+        print(f"Sebelum Tuning - Accuracy: {accuracy_before:.4f}, Precision: {precision_before:.4f}, Recall: {recall_before:.4f}, F1-Score: {f1_before:.4f}")
+        print(f"Setelah Tuning - Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1-Score: {f1:.4f}")
+        print(f"Peningkatan Akurasi: {(accuracy - accuracy_before):.4f}")
+        print(f"Peningkatan Precision: {(precision - precision_before):.4f}")
+        print(f"Peningkatan Recall: {(recall - recall_before):.4f}")
+        print(f"Peningkatan F1-Score: {(f1 - f1_before):.4f}")
 
     # Visualisasi Confusion Matrix
     plt.figure(figsize=(6, 4))
@@ -534,8 +521,7 @@ def evaluate_model(y_test, y_pred, model_name, y_pred_before=None):
     plt.title(f'Confusion Matrix - {model_name} (Setelah Tuning)')
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
-    st.pyplot(plt)
-    plt.close()
+    plt.show()
 
     return {
         'Model': model_name,
@@ -581,10 +567,10 @@ after_tuning = [
 after_df = pd.DataFrame(after_tuning)
 
 # Tampilkan tabel
-st.write("\nPerforma Model Sebelum Tuning")
-st.dataframe(before_df)
-st.write("\nPerforma Model Sesudah Tuning")
-st.dataframe(after_df)
+print("\nPerforma Model Sebelum Tuning")
+print(before_df)
+print("\nPerforma Model Sesudah Tuning")
+print(after_df)
 
 # Visualisasi perbandingan performa (hanya Accuracy)
 models = before_df['Model']
@@ -607,8 +593,7 @@ ax.legend()
 
 # Tampilkan grafik
 plt.tight_layout()
-st.pyplot(plt)
-plt.close()
+plt.show()
 
 """Keisimpulan:
 
@@ -617,4 +602,46 @@ Logistic Regression diuji dengan parameter C (kekuatan regularisasi terbalik: 0.
 Decision Tree dioptimalkan melalui parameter criterion ('gini', 'entropy'), max_depth (None, 5, 10, 20) untuk mengatur kedalaman pohon, serta min_samples_split (2, 5, 10) guna mengontrol pemisahan node, dengan fokus pada akurasi melalui validasi silang 5 lipat.
 Sementara itu, Random Forest diuji dengan parameter n_estimators (50, 100, 150) untuk jumlah pohon, max_depth (None, 10, 20), min_samples_split (2, 5), dan criterion ('gini', 'entropy'), memanfaatkan semua prosesor (`n_jobs=-1`) dan validasi silang 5 lipat untuk menemukan parameter optimal.
 Setelah melatih ulang model dengan parameter terbaik dan mengevaluasi kembali performanya, hasil menunjukkan peningkatan akurasi pada Model Logistic Regression meningkat dari 0,8750 menjadi 0,8939, Decision Tree dari 0,8638 menjadi 0,9053, dan Random Forest dari 0,9167 menjadi 0,9470, menunjukkan efektivitas proses optimasi hyperparameter dalam meningkatkan performa model.
+
+# 5. Kesimpulan Akhir
+
+Tahapan Utama:
+1. Eksplorasi Data (EDA):
+- Dataset berisi 2111 baris dan 17 kolom, dengan fitur numerik (Age, Height, Weight, FCVC, NCP, CH2O, FAF, TUE) dan kategorik (Gender, CALC, FAVC, SCC, SMOKE, CAEC, MTRANS).
+- Distribusi fitur divisualisasikan, menunjukkan pola seperti frekuensi tinggi pada CALC_Sometimes (1386) dan MTRANS_Public_Transportation (1572).
+
+2. Preprocessing:
+- Outlier dihapus menggunakan IQR (misalnya, 179 baris dari Age, 549 dari NCP).
+- Fitur variansi rendah (Height, MTRANS_Bike, MTRANS_Motorbike) dihapus.
+- Normalisasi fitur numerik menggunakan MinMaxScaler.
+- Label target NObeyesdad (6 kelas) diubah dari one-hot encoding menjadi label tunggal.
+
+3. Pemodelan dan Evaluasi:
+- Data dibagi 80% training dan 20% testing.
+- Model: Logistic Regression, Decision Tree, Random Forest.
+- Evaluasi awal (sebelum tuning):
+	- Logistic Regression: Akurasi 0.8750, Precision 0.8838, Recall 0.8750, F1-Score 0.8736.
+	- Decision Tree: Akurasi 0.8636, Precision 0.8635, Recall 0.8636, F1-Score 0.8635.
+	- Random Forest: Akurasi 0.9167, Precision 0.9164, Recall 0.9167, F1-Score 0.9131.
+
+4. Hyperparameter Tuning:
+- Menggunakan GridSearchCV dengan validasi silang 5 lipat.
+- Parameter terbaik:
+	- Logistic Regression: C=10, solver='lbfgs'.
+	- Decision Tree: criterion='entropy', max_depth=None, min_samples_split=5.
+	- Random Forest: criterion='entropy', max_depth=None, min_samples_split=2, n_estimators=100.
+- Performa setelah tuning:
+	- Logistic Regression: Akurasi 0.8939 (↑0.0189), Precision 0.9053, Recall 0.8939, F1-Score 0.8935.
+	- Decision Tree: Akurasi 0.9053 (↑0.0417), Precision 0.9081, Recall 0.9053, F1-Score 0.9057.
+	- Random Forest: Akurasi 0.9470 (↑0.0303), Precision 0.9472, Recall 0.9470, F1-Score 0.9455.
+
+Catatan:
+- Model Terbaik: Random Forest setelah tuning, dengan akurasi 0.9470 dan metrik lain di atas 0.94, unggul karena kemampuan ensemble menangkap pola kompleks.
+- Fitur Kunci: Weight, FCVC (konsumsi sayur), dan FAF (aktivitas fisik) berperan penting dalam prediksi.
+- Tantangan: Ketidakseimbangan kelas pada NObeyesdad (misalnya, Obesity_Type_I dominan dengan 351 instance) dan penghapusan data outlier mengurangi ukuran dataset.
+- Visualisasi: Confusion matrix dan grafik perbandingan metrik menunjukkan peningkatan performa setelah tuning.
+
+
+
+Capstone ini berhasil membangun model klasifikasi dengan Random Forest sebagai model terbaik (akurasi 0.9470 setelah tuning), efektif memprediksi tingkat obesitas berdasarkan fitur gaya hidup. Hyperparameter tuning terbukti meningkatkan performa secara signifikan, menunjukkan pentingnya optimasi dalam machine learning.
 """
