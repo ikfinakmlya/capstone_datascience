@@ -366,7 +366,7 @@ plt.xlabel('Metrik')
 plt.xticks(rotation=0)
 plt.legend(title='Model')
 plt.tight_layout()
-plt.st.pyplot(plt)  # Gunakan st.pyplot untuk menampilkan plot di Streamlit 
+st.pyplot(plt)  # Gunakan st.pyplot untuk menampilkan plot di Streamlit 
 plt.close()  # Tutup plot untuk menghindari penumpukan gambar
 
 """Kesimpulan:
