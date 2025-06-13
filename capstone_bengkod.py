@@ -18,6 +18,7 @@ import streamlit as st
 
 st.title("Capstone Bengkod - Data Science")
 
+st.subheader("1. EDA (Exploratory Data Analysis)")
 # Load the dataset
 file_path = "ObesityDataSet.csv"
 df = pd.read_csv(file_path)
@@ -28,7 +29,7 @@ st.dataframe(df.head(5))
 
 # Tampilkan jumlah baris dan kolom
 st.write("\nJumlah baris dan kolom:")
-st.dataframe(f"{df.shape[0]} baris, {df.shape[1]} kolom")
+st.write(f"{df.shape[0]} baris, {df.shape[1]} kolom")
 
 # Tipe data
 df = df.replace('?', np.nan)
