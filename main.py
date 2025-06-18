@@ -252,7 +252,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Sidebar untuk input
-st.sidebar.header("📝 Input Data Diri")
+st.sidebar.header("Input Data Diri")
 
 # Form input data
 with st.sidebar.form("prediction_form"):
@@ -284,7 +284,7 @@ with st.sidebar.form("prediction_form"):
     )
     
     # Submit button
-    submitted = st.form_submit_button("🔮 Prediksi Kategori Obesitas", use_container_width=True)
+    submitted = st.form_submit_button("Prediksi Kategori Obesitas", use_container_width=True)
 
 # Area utama untuk hasil
 col1, col2 = st.columns([2, 1])
@@ -412,7 +412,7 @@ with col2:
     st.write("- Overweight Level I & II") 
     st.write("- Obesity Type I, II & III")
     
-    st.info("💡 **Catatan:** Hasil prediksi ini hanya untuk referensi. Konsultasikan dengan dokter untuk diagnosis yang akurat.")
+    st.info("**Catatan:** Hasil prediksi ini hanya untuk referensi. Konsultasikan dengan dokter untuk diagnosis yang akurat.")
     
     # Riwayat prediksi (menggunakan session state)
     if 'prediction_history' not in st.session_state:
@@ -445,7 +445,6 @@ with col2:
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: #666;">
-    <p>🏥 Aplikasi Prediksi Obesitas | Dibuat dengan ❤️ menggunakan Streamlit</p>
-    <p><small>Selalu konsultasikan dengan tenaga medis profesional untuk kebutuhan kesehatan Anda</small></p>
+    <p> Aplikasi Prediksi Obesitas | Dibuat dengan ❤️ menggunakan Streamlit</p>
 </div>
 """, unsafe_allow_html=True)
