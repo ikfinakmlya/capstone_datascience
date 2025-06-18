@@ -165,6 +165,10 @@ class ObesityPredictor:
         
         if data['mtrans'] == 'Mobil pribadi':
             risk_score += 1
+        elif data['mtrans'] == 'Motor':
+            risk_score += 0.5
+        elif data['mtrans'] == 'Sepeda':
+            risk_score -= 0.5
         elif data['mtrans'] == 'Jalan kaki':
             risk_score -= 1
         
@@ -274,7 +278,10 @@ with st.sidebar.form("prediction_form"):
     family_history = st.selectbox("Riwayat Keluarga Obesitas", ["Tidak", "Ya"])
     faf = st.selectbox("Aktivitas Fisik per Minggu", [0, 1, 2, 3, 4], format_func=lambda x: f"{'Tidak pernah' if x==0 else f'{x} hari' if x < 4 else '4+ hari'}")
     tue = st.selectbox("Waktu Penggunaan Gadget per Hari", [0, 1, 2, 3], format_func=lambda x: f"{'0-1 jam' if x==0 else '1-2 jam' if x==1 else '2-5 jam' if x==2 else 'Lebih dari 5 jam'}")
-    mtrans = st.selectbox("Transportasi yang Sering Digunakan", ["Jalan kaki", "Transportasi umum", "Mobil pribadi"])
+    mtrans = st.selectbox(
+        "Transportasi yang Sering Digunakan",
+        ["Jalan kaki", "Sepeda", "Motor", "Transportasi umum", "Mobil pribadi"]
+    )
     
     # Submit button
     submitted = st.form_submit_button("🔮 Prediksi Kategori Obesitas", use_container_width=True)
